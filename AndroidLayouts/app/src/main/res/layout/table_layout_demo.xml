@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="WatchTV Pricing"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+        <TableRow android:padding="6dp" android:background="#c0efcc">
+            <TextView android:textStyle="bold" android:text="Features" android:layout_weight="2" android:textAlignment="center" />
+            <TextView android:textStyle="bold" android:text="Silver" android:layout_weight="1" android:textAlignment="center" />
+            <TextView android:textStyle="bold" android:text="Gold" android:layout_weight="1" android:textAlignment="center" />
+            <TextView android:textStyle="bold" android:text="Platinum" android:layout_weight="1" android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow android:padding="6dp" android:background="#ffffff">
+            <TextView  android:text="Screens" android:layout_weight="2" android:textAlignment="center" />
+            <TextView  android:text="1" android:layout_weight="1" android:textAlignment="center" />
+            <TextView  android:text="2" android:layout_weight="1" android:textAlignment="center" />
+            <TextView android:text="3" android:layout_weight="1" android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow android:padding="6dp" android:background="#f7f7f7">
+            <TextView  android:text="Resolution" android:layout_weight="2" android:textAlignment="center" />
+            <TextView  android:text="720" android:layout_weight="1" android:textAlignment="center" />
+            <TextView  android:text="1080" android:layout_weight="1" android:textAlignment="center" />
+            <TextView android:text="4k/8k" android:layout_weight="1" android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow android:padding="6dp" android:background="#f7f7f7">
+            <TextView  android:text="Ad-Free Content" android:layout_weight="2" android:textAlignment="center" />
+            <TextView  android:text="❌" android:layout_weight="1" android:textAlignment="center" />
+            <TextView  android:text="✅" android:layout_weight="1" android:textAlignment="center" />
+            <TextView android:text="✅" android:layout_weight="1" android:textAlignment="center" />
+        </TableRow>
+
+
+
+        <TableRow android:padding="6dp" android:background="#f7f7f7">
+            <TextView android:textSize="18dp"  android:text="Other Services" android:layout_weight="4" android:textAlignment="center" />
+        </TableRow>
+
+    </TableLayout>
+</LinearLayout>
