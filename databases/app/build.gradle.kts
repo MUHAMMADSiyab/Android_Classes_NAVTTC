@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.demo.shared_preferences"
+    namespace = "com.demo.databases"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.demo.shared_preferences"
+        applicationId = "com.demo.databases"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -36,8 +36,8 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
+    implementation(libs.paperdb);
     implementation(libs.constraintlayout)
-    implementation(libs.paperdb)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
