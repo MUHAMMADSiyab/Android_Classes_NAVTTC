@@ -1,7 +1,6 @@
 package com.demo.firebase_stuff;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,18 +15,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.demo.firebase_stuff.adapters.UsersListAdapter;
 import com.demo.firebase_stuff.models.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseReference databaseRef;
+    FirebaseFirestore db;
+    ArrayList<User> users = new ArrayList<>();
+    UsersListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,42 +38,24 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        databaseRef = FirebaseDatabase.getInstance().getReference("users");
+        db = FirebaseFirestore.getInstance();
 
-        ListView userListView = findViewById(R.id.usersListView);
+        ListView usersListView = findViewById(R.id.usersListView);
 
-        ArrayList<User> users = new ArrayList<>();
+        adapter = new UsersListAdapter(this, users);
 
-        UsersListAdapter adapter = new UsersListAdapter(this, users);
-        userListView.setAdapter(adapter);
+        usersListView.setAdapter(adapter);
 
+//        db.collection("users")
+//                .document("ufeHZ964rz5up23H0zeM")
+//                        .update("name", "John Wick");
 
+//        db.collection("users")
+//                .document("ufeHZ964rz5up23H0zeM")
+//                        .delete();
 
+        getUsers();
 
-//        databaseRef.child("-OQ3K2ugDznPUdbLvX9b").child("name").setValue("Kamran Khan"); // update
-//        databaseRef.child("-OQ3K2ugDznPUdbLvX9b").removeValue(); // delete
-
-        databaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                users.clear();
-                for (DataSnapshot userSnapshot: snapshot.getChildren()) {
-                    User user = userSnapshot.getValue(User.class);
-
-                    if (user != null) {
-                        users.add(user);
-                    }
-                }
-
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("Firebase Error: ", error.getMessage());
-
-            }
-        });
 
     }
 
@@ -84,18 +63,69 @@ public class MainActivity extends AppCompatActivity {
         EditText editName = findViewById(R.id.editName);
         EditText editEmail = findViewById(R.id.editEmail);
 
+        String name = editName.getText().toString();
+        String email = editEmail.getText().toString();
 
-        String userId = databaseRef.push().getKey();
+        if (name.isEmpty() || email.isEmpty()) {
+            Toast.makeText(this, "Cannot create empty user", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        User user = new User(editName.getText().toString(), editEmail.getText().toString());
 
-        databaseRef.child(userId).setValue(user)
+        view.setEnabled(false);
+
+
+        User user = new User(name, email);
+
+        db.collection("users")
+                .add(user)
                 .addOnSuccessListener(v -> {
-                    Toast.makeText(this, "User Added Successfully", Toast.LENGTH_SHORT).show();
+
+                    users.add(new User(name, email));
+
+                    adapter.notifyDataSetChanged();
+
+                    // Clear fields
+                    editName.setText("");
+                    editEmail.setText("");
+
+                    view.setEnabled(true);
+
+                    Toast.makeText(this, "User added successfully", Toast.LENGTH_SHORT).show();
+
                 })
                 .addOnFailureListener(error -> {
-                    Toast.makeText(this, "Unable to add a user" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Failed to save data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                 });
 
     }
+
+    private void getUsers() {
+        TextView loadingText = findViewById(R.id.loadingText);
+        loadingText.setVisibility(View.VISIBLE);
+
+        db.collection("users")
+//                .whereEqualTo("name", "Abdul Basit")
+                .orderBy("name", Query.Direction.DESCENDING)
+                .limit(10)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                   for (DocumentSnapshot doc: queryDocumentSnapshots) {
+                       User user = doc.toObject(User.class);
+
+                       if (user != null) {
+                           users.add(user);
+                       }
+                   }
+
+                   adapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(error -> {
+                    Toast.makeText(this, "Failed to get data: " + error.getMessage() , Toast.LENGTH_SHORT).show();
+                })
+                .addOnCompleteListener(v -> {
+                    loadingText.setVisibility(View.GONE);
+                });
+    }
+
 }
