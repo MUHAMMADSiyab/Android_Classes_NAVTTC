@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.selectImageBtn).setOnClickListener(v -> {
             ImagePicker.with(this)
                     .crop()
-                    .cameraOnly()
+                    .galleryOnly()
                     .createIntent(intent -> {
                         imagePickerLauncher.launch(intent);
 
