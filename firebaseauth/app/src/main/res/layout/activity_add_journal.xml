@@ -2,43 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home"
+    android:orientation="vertical"
+    android:id="@+id/addJournal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    android:gravity="center"
+    tools:context=".AddJournalActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="15dp"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:padding="20dp"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:id="@+id/userInfo"
-            android:layout_marginBottom="15dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:text="Add Journal"
+            android:layout_marginBottom="20dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/titleField"
+            android:layout_marginBottom="10dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/contentField"
+            android:minHeight="100dp"
+            android:layout_marginBottom="10dp"
             />
 
         <Button
-            android:id="@+id/openAddJournalBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Journal" />
-
-        <Button
-            android:id="@+id/openViewJournalsBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View Journals" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/logoutBtn"
-            android:text="Logout"
+            android:id="@+id/addJournalBtn"
+            android:text="Add Journal"
             />
     </LinearLayout>
+
 </LinearLayout>

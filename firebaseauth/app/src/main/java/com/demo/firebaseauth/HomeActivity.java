@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class HomeActivity extends AppCompatActivity {
 
     TextView userInfo;
-    Button logoutBtn;
+    Button logoutBtn, openAddJournalBtn, openViewJournalsBtn;
     FirebaseAuth auth;
 
     @Override
@@ -43,12 +43,27 @@ public class HomeActivity extends AppCompatActivity {
 
         userInfo = findViewById(R.id.userInfo);
         logoutBtn = findViewById(R.id.logoutBtn);
+        openAddJournalBtn = findViewById(R.id.openAddJournalBtn);
+        openViewJournalsBtn = findViewById(R.id.openViewJournalsBtn);
 
         FirebaseUser user = auth.getCurrentUser();
+
+        openAddJournalBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, AddJournalActivity.class));
+            finish();
+        });
+
+        openViewJournalsBtn.setOnClickListener(v -> {
+            startActivity(new Intent(this, JournalListActivity.class));
+            finish();
+        });
+
+
 
         if (user != null) {
             userInfo.setText("Email: " + user.getEmail());
         }
+
 
         logoutBtn.setOnClickListener(v -> {
             auth.signOut();
