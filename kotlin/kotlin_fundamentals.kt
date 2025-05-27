@@ -1,3 +1,4 @@
+
 fun main() {
     val name: String = "John Doe"
     val age: Int = 24
@@ -5,7 +6,7 @@ fun main() {
     val grade: Char = 'A'
     val isActive: Boolean = false
 
-    val users: Array<String?> = arrayOf("John", "Sara", null, "Mike")
+    val users: Array<String?> = arrayOf("John", "Sara", "John", "Sara", null, "Mike", "Mike")
 
     println("User: ${users.get(2)?.uppercase()}")
 
@@ -47,5 +48,4 @@ fun main() {
     for (color in colors) {
         println("The color is: $color")
     }
-
 }
